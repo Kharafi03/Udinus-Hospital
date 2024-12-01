@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
-    //
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    // Tentukan nama tabel jika tidak mengikuti konvensi penamaan (admins).
+    // Tentukan nama tabel jika tidak mengikuti konvensi Laravel
     protected $table = 'admin';
 
     // Kolom-kolom yang dapat diisi secara massal
@@ -21,8 +21,16 @@ class Admin extends Model
         'password',
     ];
 
-    // Kolom yang harus di-hash, biasanya untuk password
+    
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    // Kolom yang tidak boleh ditampilkan (misalnya password)
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 }

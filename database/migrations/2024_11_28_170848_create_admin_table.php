@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('no_hp', 50)->unique();
             $table->string('password');
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });

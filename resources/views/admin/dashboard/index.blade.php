@@ -124,9 +124,7 @@
                 <div class="card card-carousel overflow-hidden h-100 p-0">
                     <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
                         <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active"
-                                style="background-image: url('../assets/img/carousel-1.jpg');
-    background-size: cover;">
+                            <div class="carousel-item h-100 active" style="background-image: url('{{ asset('img/background/background-1.jpg') }}'); background-size: cover;">
                                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                         <i class="ni ni-camera-compact text-dark opacity-10"></i>
@@ -135,9 +133,7 @@
                                     <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
                                 </div>
                             </div>
-                            <div class="carousel-item h-100"
-                                style="background-image: url('../assets/img/carousel-2.jpg');
-    background-size: cover;">
+                            <div class="carousel-item h-100" style="background-image: url('{{ asset('img/background/background-2.jpg') }}'); background-size: cover;">
                                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                         <i class="ni ni-bulb-61 text-dark opacity-10"></i>
@@ -147,9 +143,7 @@
                                         ability to learn.</p>
                                 </div>
                             </div>
-                            <div class="carousel-item h-100"
-                                style="background-image: url('../assets/img/carousel-3.jpg');
-    background-size: cover;">
+                            <div class="carousel-item h-100" style="background-image: url('{{ asset('img/background/background-3.jpg') }}'); background-size: cover;">
                                 <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                     <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                         <i class="ni ni-trophy text-dark opacity-10"></i>
@@ -518,3 +512,27 @@
         </script>
     @endpush
 @endsection
+@push('styles')
+    <style>
+        html, body {
+            height: 100%; /* Pastikan elemen body memiliki tinggi penuh */
+            overflow: hidden; /* Hentikan scroll di body */
+        }
+
+        #sidenav-main {
+            position: fixed; /* Tetap di tempat saat halaman digulir */
+            top: 0;
+            bottom: 0;
+            overflow-y: auto; /* Aktifkan scroll vertikal hanya di aside */
+            overflow-x: hidden; /* Hindari scroll horizontal */
+            z-index: 1050; /* Agar tetap di atas elemen lain */
+            background-color: #fff; /* Pastikan latar belakang solid */
+        }
+
+        .main-content {
+            height: 100%; /* Tinggi penuh untuk konten utama */
+            overflow-y: auto; /* Konten utama bisa scroll sendiri */
+        }
+
+    </style>
+@endpush

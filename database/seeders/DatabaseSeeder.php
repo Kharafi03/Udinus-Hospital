@@ -21,7 +21,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call([
-            AdminSeeder::class
+            AdminSeeder::class,
+            PoliSeeder::class,
+            DokterSeeder::class,
+            PasienSeeder::class,
+            ObatSeeder::class
         ]);
     }
 }
