@@ -42,4 +42,13 @@ class Dokter extends Authenticatable
     {
         return $this->belongsTo(Poli::class, 'id_poli', 'id');
     }
+
+    /**
+     * Relasi dengan model JadwalPraktik
+     * Dokter memiliki banyak jadwal praktik.
+     */
+    public function jadwalPraktik()
+    {
+        return $this->hasMany(JadwalPraktik::class, 'id_dokter', 'id');
+    }
 }

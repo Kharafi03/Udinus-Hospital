@@ -27,7 +27,7 @@ class PasienSeeder extends Seeder
             DB::table('pasien')->insert([
                 'nama' => $faker->name, // Nama pasien
                 'alamat' => $faker->address, // Alamat pasien
-                'no_ktp' => $faker->unique()->numerify('##############'), // No KTP 16 digit
+                'no_ktp' => $faker->unique()->numerify('################'), // No KTP 16 digit
                 'no_hp' => '08' . $faker->unique()->numerify('##########'), // No HP yang dimulai dengan '08' dan panjang 12 digit
                 'no_rm' => $faker->unique()->numerify('##########'), // No RM yang unik, 10 digit
                 'password' => Hash::make('12345678'), // Password default yang sudah di-hash

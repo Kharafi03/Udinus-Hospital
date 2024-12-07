@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PoliController;
 // Admin
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DokterController as AdminDokterController;
@@ -13,18 +14,33 @@ use App\Http\Controllers\Admin\ProfilController as AdminProfilController;
 
 // Dokter
 use App\Http\Controllers\Dokter\DashboardController as DokterDashboardController;
+use App\Http\Controllers\Dokter\JadwalPraktikController as DokterJadwalPraktikController;
+use App\Http\Controllers\Dokter\ProfilController as DokterProfilController;
+
+// Pasien
+use App\Http\Controllers\Pasien\DashboardController as PasienDashboardController;
+use App\Http\Controllers\Pasien\ProfilController as PasienProfilController;
+use App\Http\Controllers\Pasien\RiwayatController as PasienRiwayatController;
+
+
 use App\Http\Controllers\RegistrasiController;
+use App\Models\Pasien;
 
 Route::get('/', [HomepageController::class, 'index'])->name('homepage');
 
-// Auth
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/poli', [PoliController::class, 'index'])->name('poli');
 
-// Register
-Route::get('/register', [RegistrasiController::class, 'index'])->name('registrasi');
-Route::post('/register', [RegistrasiController::class, 'store'])->name('registrasi.store');
+Route::middleware(['guest'])->group(function () {
+    // Auth
+    Route::get('/login', [LoginController::class, 'index'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    
+    // Register
+    Route::get('/register', [RegistrasiController::class, 'index'])->name('registrasi');
+    Route::post('/register', [RegistrasiController::class, 'store'])->name('registrasi.store');
+});
+
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Grup Middleware untuk Admin
 Route::middleware(['auth:admin'])->group(function () {
@@ -81,4 +97,31 @@ Route::middleware(['auth:admin'])->group(function () {
 Route::middleware(['auth:dokter'])->group(function () {
     // Dashboard
     Route::get('/dokter/dashboard', [DokterDashboardController::class, 'index'])->name('dokter.dashboard');
+
+    // Jadwal Praktik
+    Route::get('/dokter/jadwal', [DokterJadwalPraktikController::class, 'index'])->name('dokter.jadwal_praktik.index');
+    Route::post('/dokter/jadwal', [DokterJadwalPraktikController::class, 'store'])->name('dokter.jadwal_praktik.store');
+    Route::patch('/jadwal-praktik/{id}/activate', [DokterJadwalPraktikController::class, 'activate'])->name('dokter.jadwal_praktik.activate');
+    Route::patch('/jadwal-praktik/{id}/deactivate', [DokterJadwalPraktikController::class, 'deactivate'])->name('dokter.jadwal_praktik.deactivate');
+
+    //Profil
+    Route::get('/dokter/profil', [DokterProfilController::class, 'index'])->name('dokter.profil.index');
+    Route::post('/dokter/profil', [DokterProfilController::class, 'editProfil'])->name('dokter.profil.update');
+    Route::post('/dokter/password', [DokterProfilController::class, 'editPassword'])->name('dokter.password.update');
+});
+
+// Grup Middleware untuk Pasien
+Route::middleware(['auth:pasien'])->group(function () {
+    // Dashboard
+    // Route::get('/pasien/dashboard', [PasienDashboardController::class, 'index'])->name('pasien.dashboard');
+
+    // Profil
+    Route::get('/pasien/profil', [PasienProfilController::class, 'index'])->name('pasien.profil.index');
+    Route::post('/profile/update', [PasienProfilController::class, 'updateProfile'])->name('pasien.profil.update');
+    Route::post('/profile/update-password', [PasienProfilController::class, 'updatePassword'])->name('pasien.profil.update-password');
+
+    // Riwayat
+    Route::get('/pasien/riwayat', [PasienRiwayatController::class, 'index'])->name('pasien.riwayat.index');
+
+
 });

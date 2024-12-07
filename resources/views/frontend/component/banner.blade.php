@@ -98,9 +98,8 @@
             <div class="col-lg-7 mb-lg-0 mb-4">
                 <div class="doctor-search">
                     <div class="banner-header">
-                        <h2><span>Search Doctor,</span> Make an Appointment</h2>
-                        <p>Access to expert physicians and surgeons, advanced technologies and top-quality surgery
-                            facilities right here.</p>
+                        <h2><span>Cari Dokter,</span> Buat Janji Temu</h2>
+                        <p>Akses ke dokter dan ahli bedah terbaik, teknologi canggih, serta fasilitas bedah berkualitas tinggi di sini.</p>
                     </div>
                     <div class="doctor-form">
                         <form action="" class="doctor-search">

@@ -25,15 +25,8 @@
                         <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" aria-current="page"
                             href="{{ url('/') }}">Beranda</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle me-5" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Poli
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Poli Umum</a></li>
-                            <li><a class="dropdown-item" href="#">Poli Gigi</a></li>
-                        </ul>
+                    <li class="nav-item me-5">
+                        <a class="nav-link" href="{{ route('poli') }}">Poli</a>
                     </li>
                     <li class="nav-item me-5">
                         <a class="nav-link" href="#">Tentang Kami</a>
@@ -54,10 +47,16 @@
                                 @else
                                     Pengguna tidak ditemukan
                                 @endif
-                            </a>
+                            </a>                            
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Profil</a></li>
-                                <li><a class="dropdown-item" href="#">Riwayat Periksa</a></li>
+                                @if (Auth::guard('pasien')->check()) 
+                                    <li><a class="dropdown-item" href="{{ route('pasien.profil.index') }}">Profil</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('pasien.riwayat.index') }}">Riwayat Periksa</a></li>
+                                @elseif (Auth::guard('dokter')->check())
+                                    <li><a class="dropdown-item" href="{{ route('dokter.dashboard') }}">Dashboard</a></li>
+                                @elseif (Auth::guard('admin')->check())
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                @endif
                                 <li><a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Keluar</a>
                                 </li>
@@ -72,7 +71,7 @@
                             <a href="{{ route('registrasi') }}" class="btn btn-warning shadow-sm d-block mb-2">Daftar Sebagai Pasien</a>
                         </li>
                         <li class="nav-item mx-3">
-                            <a href="{{ route('login') }}" class="btn btn-primary shadow-sm d-block">Login</a>
+                            <a href="{{ route('login') }}" class="btn btn-dark shadow-sm d-block">Login</a>
                         </li>
                     @endif
                 </ul>

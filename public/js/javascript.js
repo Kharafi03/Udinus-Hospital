@@ -68,6 +68,22 @@ function confirmDelete(form) {
     });
 }
 
+// Fungsi untuk menangani submit form ubah jadwal praktik
+function confirmUpdateJadwal(form) {
+    Swal.fire({
+        title: 'Apakah Anda yakin?',
+        text: "Anda akan mengubah jadwal praktik ini!",
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonText: 'Batal',
+        confirmButtonText: 'Ya, Ubah!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            form.submit();
+        }
+    });
+}
+
 // Fungsi untuk memformat input dengan pemisah ribuan
 function formatInputRibuan(inputElement) {
     $(inputElement).on('input', function() {

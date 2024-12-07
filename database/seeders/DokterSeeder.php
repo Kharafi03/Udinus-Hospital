@@ -16,20 +16,34 @@ class DokterSeeder extends Seeder
      */
     public function run(): void
     {
-        // Menggunakan Faker untuk generate data acak
-        // Mengambil locale dari environment
-        $fakerLocale = env('APP_FAKER_LOCALE', 'en_US'); // Jika APP_FAKER_LOCALE tidak ada, default ke 'id_ID'
+        $fakerLocale = env('APP_FAKER_LOCALE', 'en_US');
+        $faker = Faker::create($fakerLocale);
 
-        $faker = Faker::create($fakerLocale); // Menggunakan locale yang ditentukan di .env
+        // Misalnya, ada 10 poli
+        $totalPoli = 15;
 
-        // Data 15 dokter dengan `id_poli` yang berbeda dan `no_hp` unik
-        for ($i = 1; $i <= 15; $i++) {
+        // Pertama, pastikan setiap poli mendapatkan satu dokter
+        for ($i = 1; $i <= $totalPoli; $i++) {
             DB::table('dokter')->insert([
-                'nama' => $faker->name, // Nama dokter acak (dengan nama Indonesia)
-                'alamat' => $faker->address, // Alamat acak
-                'no_hp' => '08' . $faker->unique()->numerify('##########'), // No HP yang dimulai dengan '08' dan panjang 12 digit
-                'password' => Hash::make('12345678'), // Password yang sudah di-hash
-                'id_poli' => $i, // Menggunakan `id_poli` dari 1 hingga 15
+                'nama' => $faker->name,
+                'alamat' => $faker->address,
+                'no_hp' => '08' . $faker->unique()->numerify('##########'),
+                'password' => Hash::make('12345678'),
+                'id_poli' => $i, // Setiap poli mendapatkan satu dokter
+            ]);
+        }
+
+        // Sekarang, tambahkan sisa dokter secara acak (25 - 10 = 15 dokter tambahan)
+        $remainingDoctors = 15; // Total dokter yang harus didistribusikan setelah 1 dokter di setiap poli
+
+        for ($i = 1; $i <= $remainingDoctors; $i++) {
+            // Pilih poli secara acak
+            DB::table('dokter')->insert([
+                'nama' => $faker->name,
+                'alamat' => $faker->address,
+                'no_hp' => '08' . $faker->unique()->numerify('##########'),
+                'password' => Hash::make('12345678'),
+                'id_poli' => rand(1, $totalPoli), // Pilih poli secara acak dari yang tersedia
             ]);
         }
     }

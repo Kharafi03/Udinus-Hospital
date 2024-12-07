@@ -25,7 +25,8 @@ class DatabaseSeeder extends Seeder
             PoliSeeder::class,
             DokterSeeder::class,
             PasienSeeder::class,
-            ObatSeeder::class
+            ObatSeeder::class,
+            JadwalPraktikSeeder::class
         ]);
     }
 }

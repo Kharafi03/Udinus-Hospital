@@ -20,9 +20,7 @@
     </style>
     @stack('styles')
 </head>
-
 @if (Request::is('admin/*'))
-
     <body class="g-sidenav-show bg-gray-100">
         <div class="min-height-300 bg-dark position-absolute w-100"></div>
         {{-- Sidenav --}}
@@ -39,7 +37,24 @@
         {{-- Configurator --}}
         @include('admin.component.configurator')
         {{-- End Configurator --}}
-    @else
+@elseif (Request::is('dokter/*'))
+    <body class="g-sidenav-show bg-gray-100">
+        <div class="min-height-300 bg-dark position-absolute w-100"></div>
+        {{-- Sidenav --}}
+        @include('dokter.component.sidenav')
+        {{-- End Sidenav --}}
+        <main class="main-content position-relative border-radius-lg ">
+            {{-- Navbar --}}
+            @include('dokter.component.navbar')
+            {{-- End Navbar --}}
+            {{-- Content --}}
+            @yield('content')
+            {{-- End Content --}}
+        </main>
+        {{-- Configurator --}}
+        @include('dokter.component.configurator')
+        {{-- End Configurator --}}
+@else
         {{-- Only Content --}}
         @include('frontend.component.navbar')
 

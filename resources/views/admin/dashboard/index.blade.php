@@ -1,5 +1,28 @@
 @extends('component.layout.app')
+@push('styles')
+    <style>
+        html, body {
+            height: 100%; /* Pastikan elemen body memiliki tinggi penuh */
+            overflow: hidden; /* Hentikan scroll di body */
+        }
 
+        #sidenav-main {
+            position: fixed; /* Tetap di tempat saat halaman digulir */
+            top: 0;
+            bottom: 0;
+            overflow-y: auto; /* Aktifkan scroll vertikal hanya di aside */
+            overflow-x: hidden; /* Hindari scroll horizontal */
+            z-index: 1050; /* Agar tetap di atas elemen lain */
+            background-color: #fff; /* Pastikan latar belakang solid */
+        }
+
+        .main-content {
+            height: 100%; /* Tinggi penuh untuk konten utama */
+            overflow-y: auto; /* Konten utama bisa scroll sendiri */
+        }
+
+    </style>
+@endpush
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
@@ -512,27 +535,3 @@
         </script>
     @endpush
 @endsection
-@push('styles')
-    <style>
-        html, body {
-            height: 100%; /* Pastikan elemen body memiliki tinggi penuh */
-            overflow: hidden; /* Hentikan scroll di body */
-        }
-
-        #sidenav-main {
-            position: fixed; /* Tetap di tempat saat halaman digulir */
-            top: 0;
-            bottom: 0;
-            overflow-y: auto; /* Aktifkan scroll vertikal hanya di aside */
-            overflow-x: hidden; /* Hindari scroll horizontal */
-            z-index: 1050; /* Agar tetap di atas elemen lain */
-            background-color: #fff; /* Pastikan latar belakang solid */
-        }
-
-        .main-content {
-            height: 100%; /* Tinggi penuh untuk konten utama */
-            overflow-y: auto; /* Konten utama bisa scroll sendiri */
-        }
-
-    </style>
-@endpush

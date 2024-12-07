@@ -65,15 +65,6 @@ class LoginController extends Controller
         ]);
     }
 
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
-    //     return redirect()->route('login')
-    //         ->with([
-    //             'message' => 'Anda telah logout.',
-    //             'alert-type' => 'success'
-    //         ]);
-    // }
     public function logout(Request $request)
     {
         $guards = ['admin', 'dokter', 'pasien']; // Daftar guard yang digunakan
