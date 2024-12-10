@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="banner">
         @include('frontend.component.banner')

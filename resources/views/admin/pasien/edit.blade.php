@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Edit Pasien - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="content pt-4">
         <div class="container-fluid">
@@ -73,7 +76,7 @@
                                             <label for="no_rm" class="col-form-label">No RM</label>
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control @error('no_rm') is-invalid @enderror"
-                                                    name="no_rm" id="no_rm" value="{{ old('no_rm', $pasien->no_rm) }}" required>
+                                                    name="no_rm" id="no_rm" value="{{ old('no_rm', $pasien->no_rm) }}" readonly required>
                                                 @error('no_rm')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}
@@ -119,6 +122,7 @@
         $(document).ready(function () {
             // format input number
             formatInputNumber('#no_hp');
+            formatInputNumber('#no_ktp');
         });
     </script>
 @endpush

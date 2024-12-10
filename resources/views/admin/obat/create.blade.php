@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Tambah Obat - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="content pt-4">
         <div class="container-fluid">
@@ -80,22 +83,8 @@
             formatInputRibuan('#harga');
 
             // Sebelum formulir dikirim, hapus titik untuk mengirim data dalam format angka murni
-            $('#createObatForm').on('submit', function(e) {
+            formatHargaInput('createObatForm', 'harga');
 
-                e.preventDefault();
-
-                // Ambil nilai dari input
-                let harga = $('#harga').val();
-
-                // Hapus titik untuk mendapatkan angka murni (juga menghapus koma jika ada)
-                harga = harga.replace(/\./g, ''); // Menghapus titik
-
-                // Set nilai input harga yang akan dikirim tanpa titik
-                $('#harga').val(harga);
-
-                // Kirim formulir
-                $(this).unbind('submit').submit();
-            });
         });
     </script>
 @endpush

@@ -81,22 +81,7 @@
             formatInputRibuan('#harga');
 
             // Sebelum formulir dikirim, hapus titik untuk mengirim data dalam format angka murni
-            $('#editObatForm').on('submit', function(e) {
-
-                e.preventDefault();
-
-                // Ambil nilai dari input
-                let harga = $('#harga').val();
-
-                // Hapus titik untuk mendapatkan angka murni (juga menghapus koma jika ada)
-                harga = harga.replace(/\./g, ''); // Menghapus titik
-
-                // Set nilai input harga yang akan dikirim tanpa titik
-                $('#harga').val(harga);
-
-                // Kirim formulir
-                $(this).unbind('submit').submit();
-            });
+            formatHargaInput('editObatForm', 'harga');
         });
     </script>
 @endpush

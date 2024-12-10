@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Dashboard Admin - Poliklinik Udinus</title>
+@endpush
 @push('styles')
     <style>
         html, body {
@@ -32,19 +35,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Dokter</p>
                                     <h5 class="font-weight-bolder">
-                                        $53,000
+                                        {{ $jumlah_dokter }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
-                                    </p>
                                 </div>
                             </div>
-                            <div class="col-4 text-end">
+                            <div class="col-4 d-flex align-items-center justify-content-center">
                                 <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-user-md text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -57,19 +56,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Pasien</p>
                                     <h5 class="font-weight-bolder">
-                                        2,300
+                                        {{ $jumlah_pasien }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
-                                    </p>
                                 </div>
                             </div>
-                            <div class="col-4 text-end">
+                            <div class="col-4 d-flex align-items-center justify-content-center">
                                 <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-users text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -82,19 +77,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Poli</p>
                                     <h5 class="font-weight-bolder">
-                                        +3,462
+                                        {{ $jumlah_poli }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
-                                    </p>
                                 </div>
                             </div>
-                            <div class="col-4 text-end">
+                            <div class="col-4 d-flex align-items-center justify-content-center">
                                 <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-hospital text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -107,18 +98,15 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Jumlah Obat</p>
                                     <h5 class="font-weight-bolder">
-                                        $103,430
+                                        {{ $jumlah_obat }}
                                     </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                                    </p>
                                 </div>
                             </div>
-                            <div class="col-4 text-end">
+                            <div class="col-4 d-flex align-items-center justify-content-center">
                                 <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                    <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-capsules text-lg opacity-10" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>

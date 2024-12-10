@@ -99,3 +99,23 @@ function formatInputRibuan(inputElement) {
         $(this).val(inputVal);
     });
 }
+
+// Fungsi untuk memformat input harga
+function formatHargaInput(formId, inputId) {
+    // Tambahkan event listener untuk submit form
+    $(`#${formId}`).on('submit', function (e) {
+        e.preventDefault(); // Mencegah submit default form
+
+        // Ambil nilai dari input
+        let harga = $(`#${inputId}`).val();
+
+        // Hapus titik untuk mendapatkan angka murni
+        harga = harga.replace(/\./g, ''); // Menghapus semua titik
+
+        // Set nilai input harga yang akan dikirim tanpa titik
+        $(`#${inputId}`).val(harga);
+
+        // Kirim formulir
+        $(this).unbind('submit').submit();
+    });
+}

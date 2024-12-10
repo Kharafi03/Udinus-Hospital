@@ -1,5 +1,7 @@
 @extends('component.layout.app')
-
+@push('title')
+    <title>Login - Poliklinik Udinus</title>
+@endpush
 @section('content')
     {{-- <body class="">
     <main class="main-content mt-0"> --}}

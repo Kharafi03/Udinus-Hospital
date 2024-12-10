@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Tambah Pasien - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="content pt-4">
         <div class="container-fluid">
@@ -72,7 +75,8 @@
                                             <label for="no_rm" class="col-form-label">No RM</label>
                                             <div class="col-sm-12">
                                                 <input type="text" class="form-control @error('no_rm') is-invalid @enderror"
-                                                    name="no_rm" id="no_rm" autocomplete="" required>
+                                                    name="no_rm" id="no_rm" value="{{ old('no_rm', $no_rm) }}" 
+                                                    autocomplete="" readonly required>
                                                 @error('no_rm')
                                                     <div class="invalid-feedback">
                                                         {{ $message }}

@@ -1,5 +1,7 @@
 @extends('component.layout.app')
-
+@push('title')
+    <title>Registrasi Pasien - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="py-5">
         <div class="container py-5">

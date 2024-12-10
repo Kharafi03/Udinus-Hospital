@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Profil - Poliklinik Udinus</title>
+@endpush
 @push('styles')
     <style>
         body {

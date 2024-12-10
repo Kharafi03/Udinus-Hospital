@@ -1,7 +1,11 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Profil - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="content pt-4">
         <div class="container-fluid py-4">
+            @include('component.alert')
             <div class="row">
                 <div class="col-md-4">
                     <div class="card card-profile mb-4">

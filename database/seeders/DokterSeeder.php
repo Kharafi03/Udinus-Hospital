@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 use Faker\Factory as Faker;
 
 class DokterSeeder extends Seeder
@@ -44,6 +45,8 @@ class DokterSeeder extends Seeder
                 'no_hp' => '08' . $faker->unique()->numerify('##########'),
                 'password' => Hash::make('12345678'),
                 'id_poli' => rand(1, $totalPoli), // Pilih poli secara acak dari yang tersedia
+                'created_at' => Carbon::now(), // Tanggal dan waktu saat ini
+                'created_at' => Carbon::now(), // Tanggal dan waktu saat ini
             ]);
         }
     }

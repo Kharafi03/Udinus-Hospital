@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class AdminSeeder extends Seeder
 {
@@ -19,6 +20,8 @@ class AdminSeeder extends Seeder
             'alamat' => 'Jl. PG Banjaratma',
             'no_hp' => '082136676464',
             'password' => Hash::make('12345678'),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
     }
 }

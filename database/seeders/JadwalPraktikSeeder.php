@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class JadwalPraktikSeeder extends Seeder
 {
@@ -41,6 +42,8 @@ class JadwalPraktikSeeder extends Seeder
                 'jam_mulai' => $jadwal['jam_mulai'],
                 'jam_selesai' => $jadwal['jam_selesai'],
                 'is_active' => 1, // Jadwal aktif
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
             // Tambahkan jadwal ke array existingSchedules

@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Tambah Dokter - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section class="content pt-4">
         <div class="container-fluid">

@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Daftar Dokter - Poliklinik Udinus</title>
+@endpush
 @section('content')
     <section id="index-dokter">
         <div class="container-fluid py-4">
@@ -13,6 +16,7 @@
                             </a>
                         </div>
                         <div class="card-body pt-0">
+                            @include('component.alert')
                             <div class="table-responsive">
                                 <table id="data-table" class="table table-hover table-responsive align-items-center align-middle w-100">
                                     <thead>

@@ -13,7 +13,7 @@ class RegistrasiController extends Controller
     //
     public function index()
     {
-        return view('frontend.registrasi.index');
+        return view('auth.registrasi');
     }
 
     public function store(Request $request)

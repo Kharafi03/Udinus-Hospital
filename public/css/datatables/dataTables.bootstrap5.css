@@ -371,7 +371,7 @@ div.dt-container div.dt-length label {
   white-space: nowrap;
 }
 div.dt-container div.dt-length select {
-  width: 5em;
+  width: 6em;
   display: inline-block;
   margin-right: 0.5em;
 }

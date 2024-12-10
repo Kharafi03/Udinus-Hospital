@@ -1,5 +1,7 @@
 @extends('component.layout.app')
-
+@push('title')
+    <title>Riwayat Pasien - Poliklinik Udinus</title>
+@endpush
 @push('styles')
     <style>
         body {
