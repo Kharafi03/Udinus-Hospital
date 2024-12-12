@@ -17,6 +17,8 @@
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
     <script>
-        new DataTable('.table');
-    </script>
+        new DataTable('.table', {
+            "order": [[0, 'desc']] // Mengurutkan berdasarkan kolom pertama (0) secara menurun (desc)
+        });
+    </script>    
 @endpush

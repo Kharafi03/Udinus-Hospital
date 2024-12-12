@@ -139,6 +139,7 @@
                                         <div class="modal-body">
                                             <form method="POST" action="{{ route('dokter.jadwal_praktik.store') }}">
                                                 @csrf
+                                                <input type="hidden" name="id_dokter" id="id_dokter" value="{{ auth()->guard('dokter')->user()->id }}">
                                                 <input type="hidden" name="hari" id="hari" value="Senin">
                                                 <div class="mb-3">
                                                     <label for="jam_mulai" class="form-label">Jam Mulai</label>

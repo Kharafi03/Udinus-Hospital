@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('daftar_poli', function (Blueprint $table) {
+        Schema::create('detail_periksa', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_pasien')->constrained('pasien')->cascadeOnDelete();
-            $table->foreignId('id_jadwal')->constrained('jadwal_praktik')->cascadeOnDelete();
-            $table->date('tgl_periksa');
-            $table->text('keluhan');
-            $table->integer('no_antrian')->nullable()->default(0);
+            $table->foreignId('id_periksa')->constrained('periksa')->cascadeOnDelete();
+            $table->foreignId('id_obat')->constrained('obat')->cascadeOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daftar_poli');
+        Schema::dropIfExists('detail_periksa');
     }
 };

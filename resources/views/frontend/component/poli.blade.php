@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             height: 100%;
-            min-height: 300px;
+            min-height: 100px;
             overflow: hidden;
             position: relative;
             transition: transform 0.3s ease-in-out;
@@ -83,25 +83,17 @@
         <div id="clinicCarousel" class="owl-carousel owl-theme">
             @foreach ($polis as $poli)
                 <div class="item m-2">
-                    <a href="" class="text-decoration-none">
-                        <div class="card shadow-none border w-100">
-                            <img src="{{ asset('img/background/background-3.jpg') }}" class="card-img-top"
-                                alt="{{ $poli->nama_poli }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $poli->nama_poli }}</h5>
-                                <p class="card-text">{{ $poli->keterangan }}</p>
-                            </div>
+                    <div class="card shadow-none border w-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $poli->nama_poli }}</h5>
+                            <p class="card-text">{{ $poli->keterangan }}</p>
                         </div>
-                    </a>
+                    </div>
                 </div>
             @endforeach
         </div>
-
     </div>
 </section>
-
-
-
 @push('scripts')
     <!-- Owl Carousel CSS -->
     <link rel="stylesheet" href="{{ asset('css/owlcarousel/owl.carousel.css') }}">

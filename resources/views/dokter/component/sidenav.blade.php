@@ -16,27 +16,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="fa-solid fa-user-doctor text-lg opacity-10 ms-1"></i>
-                    <span class="nav-link-text ms-1">Dokter</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="fa-solid fa-bed-pulse text-lg opacity-10 ms-1"></i>
-                    <span class="nav-link-text ms-1">Pasien</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="fa-solid fa-hospital-user  text-lg opacity-10 ms-1"></i>
-                    <span class="nav-link-text ms-1">Poli</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " href="">
-                    <i class="fa-solid fa-pills  text-lg opacity-10 ms-1"></i>
-                    <span class="nav-link-text ms-1">Obat</span>
+                <a class="nav-link {{ Route::is('dokter.periksa.*') ? 'active' : '' }}" href="{{ route('dokter.periksa.index') }}">
+                    <i class="fa-solid fa-person-circle-check text-lg opacity-10 ms-1"></i>
+                    <span class="nav-link-text ms-1">Periksa</span>
                 </a>
             </li>
         </ul>

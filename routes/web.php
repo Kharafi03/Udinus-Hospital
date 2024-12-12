@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\ProfilController as AdminProfilController;
 
 // Dokter
 use App\Http\Controllers\Dokter\DashboardController as DokterDashboardController;
+use App\Http\Controllers\Dokter\PeriksaController as DokterPeriksaController;
 use App\Http\Controllers\Dokter\JadwalPraktikController as DokterJadwalPraktikController;
 use App\Http\Controllers\Dokter\ProfilController as DokterProfilController;
 
@@ -98,6 +99,13 @@ Route::middleware(['auth:dokter'])->group(function () {
     // Dashboard
     Route::get('/dokter/dashboard', [DokterDashboardController::class, 'index'])->name('dokter.dashboard');
 
+    // Periksa
+    Route::get('/dokter/periksa', [DokterPeriksaController::class, 'index'])->name('dokter.periksa.index');
+    Route::get('/dokter/periksa/detail/{id}', [DokterPeriksaController::class, 'detail'])->name('dokter.periksa.detail');
+    Route::post('/dokter/periksa/store/{id}', [DokterPeriksaController::class, 'store'])->name('dokter.periksa.store');
+    Route::put('/dokter/periksa/{id}', [DokterPeriksaController::class, 'update'])->name('dokter.periksa.update');
+    Route::delete('/dokter/periksa/{id}', [DokterPeriksaController::class, 'destroy'])->name('dokter.periksa.destroy');
+
     // Jadwal Praktik
     Route::get('/dokter/jadwal', [DokterJadwalPraktikController::class, 'index'])->name('dokter.jadwal_praktik.index');
     Route::post('/dokter/jadwal', [DokterJadwalPraktikController::class, 'store'])->name('dokter.jadwal_praktik.store');
@@ -122,6 +130,8 @@ Route::middleware(['auth:pasien'])->group(function () {
 
     // Riwayat
     Route::get('/pasien/riwayat', [PasienRiwayatController::class, 'index'])->name('pasien.riwayat.index');
+    Route::get('/pasien/get-jadwal/{id_poli}', [PasienRiwayatController::class, 'getJadwal'])->name('pasien.get-jadwal');
+    Route::post('/pasien/daftar-poli', [PasienRiwayatController::class, 'daftarPoli'])->name('pasien.daftar_poli');
 
 
 });
