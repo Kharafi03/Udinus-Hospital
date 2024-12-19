@@ -32,9 +32,6 @@
             @yield('content')
             {{-- End Content --}}
         </main>
-        {{-- Configurator --}}
-        @include('admin.component.configurator')
-        {{-- End Configurator --}}
 @elseif (Request::is('dokter/*'))
     <body class="g-sidenav-show bg-gray-100">
         <div class="min-height-300 bg-dark position-absolute w-100"></div>
@@ -49,9 +46,6 @@
             @yield('content')
             {{-- End Content --}}
         </main>
-        {{-- Configurator --}}
-        @include('dokter.component.configurator')
-        {{-- End Configurator --}}
 @else
         {{-- Only Content --}}
         @include('frontend.component.navbar')
@@ -63,7 +57,7 @@
 <script src="{{ asset('js/core/popper.min.js') }}"></script>
 <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/plugins/perfect-scrollbar.min.js') }}"></script>
-<script src="{{ asset('js/plugins/smooth-scrollbar.min.js') }}"></script>
+{{-- <script src="{{ asset('js/plugins/smooth-scrollbar.min.js') }}"></script> --}}
 <script src="{{ asset('js/plugins/chartjs.min.js') }}"></script>
 <script src="{{ asset('js/plugins/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('js/plugins/font-awesome.js') }}"></script>
@@ -71,15 +65,17 @@
 <script src="{{ asset('js/javascript.js') }}"></script>
 @include('component.sweetalert')
 @stack('scripts')
-<script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
-            damping: '0.5'
+@if (Request::is('admin/*') || Request::is('dokter/*'))
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-</script>
+    </script>
+@endif
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

@@ -3,19 +3,20 @@
     <title>Tambah Pasien - Poliklinik Udinus</title>
 @endpush
 @section('content')
-    <section class="content pt-4">
-        <div class="container-fluid">
+    <!-- Tambah Pasien -->
+    <section id="tambah-pasien">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <h3>Tambah Pasien</h3>
-                            <a href="{{ route('admin.pasien.index') }}" class="btn btn-success shadow-sm float-right">
+                            <a href="{{ route('admin.pasien.index') }}" class="btn btn-success shadow-sm float-right mt-2">
                                 <i class="fa fa-arrow-left me-1"></i>
                                 Kembali
                             </a>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body">
                             @include('component.alert')
                             <form method="POST" action="{{ route('admin.pasien.store') }}" enctype="multipart/form-data">
                                 @csrf

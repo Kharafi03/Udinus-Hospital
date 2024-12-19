@@ -3,7 +3,8 @@
     <title>Daftar Dokter - Poliklinik Udinus</title>
 @endpush
 @section('content')
-    <section id="index-dokter">
+    <!-- Daftar Periksa -->
+    <section id="daftar-periksa">
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
@@ -54,35 +55,32 @@
                                                     <p class="text-xs font-weight-bold mb-0">{{ $daftarPoli->pasien->nama }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $daftarPoli->tgl_periksa }}</span>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ \Carbon\Carbon::parse($daftarPoli->tgl_periksa)->isoFormat('D MMMM YYYY') }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">
+                                                    <p class="text-xs font-weight-bold mb-0">
                                                         {{ $daftarPoli->jadwalPraktik->hari }} 
                                                         ({{ \Carbon\Carbon::parse($daftarPoli->jadwalPraktik->jam_mulai)->format('H:i') }} - 
                                                         {{ \Carbon\Carbon::parse($daftarPoli->jadwalPraktik->jam_selesai)->format('H:i') }})
                                                     </span>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $daftarPoli->no_antrian }}</span>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $daftarPoli->no_antrian }}</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">
-                                                        
-                                                    </span>
+                                                    <p class="text-xs font-weight-bold mb-0">
+                                                        @if ($daftarPoli->periksa)
+                                                            <span class="badge bg-success">Sudah Diperiksa</span>
+                                                        @else
+                                                            <span class="badge bg-danger">Belum Diperiksa</span>
+                                                        @endif
+                                                    </>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <div class="d-flex justify-content-center align-items-center gap-2">
                                                         <a href="{{ route('dokter.periksa.detail', $daftarPoli->id) }}" class="btn btn-dark btn-sm">
                                                             <i class="fa fa-eye"></i>
                                                         </a>
-                                                        <form action="" method="POST" class="delete-form">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger btn-sm" type="submit">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

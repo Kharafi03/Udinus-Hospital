@@ -35,7 +35,7 @@ Route::middleware(['guest'])->group(function () {
     // Auth
     Route::get('/login', [LoginController::class, 'index'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login');
-    
+
     // Register
     Route::get('/register', [RegistrasiController::class, 'index'])->name('registrasi');
     Route::post('/register', [RegistrasiController::class, 'store'])->name('registrasi.store');
@@ -45,6 +45,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Grup Middleware untuk Admin
 Route::middleware(['auth:admin'])->group(function () {
+
+    // Dashboard
+    Route::get('/admin', function () {
+        return redirect()->route('admin.dashboard');
+    });
+
     // Dashboard
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
 
@@ -96,6 +102,12 @@ Route::middleware(['auth:admin'])->group(function () {
 
 // Grup Middleware untuk Dokter
 Route::middleware(['auth:dokter'])->group(function () {
+
+    // Dashboard
+    Route::get('/dokter', function () {
+        return redirect()->route('dokter.dashboard');
+    });
+
     // Dashboard
     Route::get('/dokter/dashboard', [DokterDashboardController::class, 'index'])->name('dokter.dashboard');
 
@@ -129,9 +141,11 @@ Route::middleware(['auth:pasien'])->group(function () {
     Route::post('/profile/update-password', [PasienProfilController::class, 'updatePassword'])->name('pasien.profil.update-password');
 
     // Riwayat
+    Route::get('/pasien', function () {
+        return redirect()->route('pasien.riwayat.index');
+    });
     Route::get('/pasien/riwayat', [PasienRiwayatController::class, 'index'])->name('pasien.riwayat.index');
-    Route::get('/pasien/get-jadwal/{id_poli}', [PasienRiwayatController::class, 'getJadwal'])->name('pasien.get-jadwal');
+    Route::get('/pasien/get-jadwal/{id_poli}/{hari}', [PasienRiwayatController::class, 'getJadwal'])->name('pasien.get-jadwal');
     Route::post('/pasien/daftar-poli', [PasienRiwayatController::class, 'daftarPoli'])->name('pasien.daftar_poli');
-
-
+    Route::get('/pasien/riwayat/detail/{id}', [PasienRiwayatController::class, 'detail'])->name('pasien.riwayat.detail');
 });

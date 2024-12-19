@@ -30,11 +30,10 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Untuk Pasien</h5>
                 <ul class="list-unstyled">
-                    <li><a href="search.html" class="text-decoration-none">Cari Dokter</a></li>
-                    <li><a href="login.html" class="text-decoration-none">Login</a></li>
-                    <li><a href="register.html" class="text-decoration-none">Registrasi</a></li>
-                    <li><a href="booking.html" class="text-decoration-none">Pemesanan</a></li>
-                    <li><a href="patient-dashboard.html" class="text-decoration-none">Dashboard Pasien</a></li>
+                    <li><a href="{{ route('poli') }}" class="text-decoration-none">Cari Dokter</a></li>
+                    <li><a href="{{ route('login') }}" class="text-decoration-none">Login</a></li>
+                    <li><a href="{{ route('registrasi') }}" class="text-decoration-none">Registrasi</a></li>
+                    <li><a href="{{ route('pasien.riwayat.index') }}" class="text-decoration-none">Dashboard Pasien</a></li>
                 </ul>
             </div>
 
@@ -42,11 +41,8 @@
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Untuk Dokter</h5>
                 <ul class="list-unstyled">
-                    <li><a href="appointments.html" class="text-decoration-none">Janji Temu</a></li>
-                    <li><a href="chat.html" class="text-decoration-none">Chat</a></li>
-                    <li><a href="login.html" class="text-decoration-none">Login</a></li>
-                    <li><a href="doctor-register.html" class="text-decoration-none">Registrasi</a></li>
-                    <li><a href="doctor-dashboard.html" class="text-decoration-none">Dashboard Dokter</a></li>
+                    <li><a href="{{ route('login') }}" class="text-decoration-none">Login</a></li>
+                    <li><a href="{{ route('dokter.dashboard') }}" class="text-decoration-none">Dashboard Dokter</a></li>
                 </ul>
             </div>
 

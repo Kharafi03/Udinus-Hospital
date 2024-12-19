@@ -26,7 +26,7 @@ class Poli extends Model
     ];
 
     /**
-     * Relasi dengan model Dokter
+     * Relasi dengan model Dokter (One to Many)
      * Satu poli bisa memiliki banyak dokter.
      */
     public function dokter()

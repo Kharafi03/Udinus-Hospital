@@ -28,6 +28,11 @@ class JadwalPraktik extends Model
         'deleted_at'
     ];
 
+    /**
+     * Relasi dengan model Dokter
+     * Satu JadwalPraktik terkait dengan satu dokter.
+     */
+
     public function dokter()
     {
         return $this->belongsTo(Dokter::class, 'id_dokter');

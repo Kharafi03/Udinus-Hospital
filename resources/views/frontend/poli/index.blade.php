@@ -3,6 +3,8 @@
     <title>Daftar Poli - Poliklinik Udinus</title>
 @endpush
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}">
     <style>
         body {
             background: url('/img/frontend/poli/poli-background.jpg') no-repeat center center;
@@ -29,11 +31,6 @@
         .card {
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
         }
 
         .schedule-item {
@@ -101,7 +98,7 @@
                                             <img src="{{ asset('img/user/user.png') }}" class="rounded-circle"
                                                 style="max-width: 80px; height: 80px; object-fit: cover; object-position: top;">
                                             <div class="ms-3">
-                                                <h5 class="card-title mb-1">{{ $dokter->nama }}</h5>
+                                                <h4 class="card-title mb-1">{{ $dokter->nama }}</h4>
                                                 <p class="text-muted mb-2">{{ $dokter->poli->nama_poli ?? 'Spesialis Tidak Diketahui' }}</p>
                                             </div>
                                         </div>
@@ -129,14 +126,14 @@
                                             </div>
                                         @endif
 
-                                        <div class="text-end">
+                                        {{-- <div class="text-end">
                                             <a href="#">
                                                 <button class="btn btn-dark align-items-center">
                                                     <span class="me-2">Jadwalkan Pemeriksaan</span>
                                                     <i class="fas fa-arrow-right"></i>
                                                 </button>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -148,6 +145,7 @@
     </section>
 @endsection
 @push('scripts')
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#poliFilter').on('change', function() {
@@ -169,5 +167,16 @@
                 }
             });
         });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi Select2
+            $('#poliFilter').select2({
+                placeholder: "Pilih Poli", 
+                allowClear: true,
+                width: '100%', 
+                theme: 'bootstrap-5'
+            });
+        })
     </script>
 @endpush

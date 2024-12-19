@@ -3,6 +3,7 @@
     <title>Daftar Dokter - Poliklinik Udinus</title>
 @endpush
 @section('content')
+    <!-- Daftar Dokter -->
     <section id="index-dokter">
         <div class="container-fluid py-4">
             <div class="row">
@@ -15,7 +16,7 @@
                                 Tambah 
                             </a>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body">
                             @include('component.alert')
                             <div class="table-responsive">
                                 <table id="data-table" class="table table-hover table-responsive align-items-center align-middle w-100">
@@ -44,25 +45,25 @@
                                     <tbody>
                                         @forelse ( $dokters as $dokter )
                                             <tr>
-                                                <td class="align-middle text-center text-sm">
+                                                <td>
                                                     <p class="text-xs font-weight-bold mb-0">{{ $loop->iteration }}</p>
                                                 </td>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-0">{{ $dokter->nama }}</p>
                                                 </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $dokter->alamat }}</span>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $dokter->alamat }}</p>
                                                 </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $dokter->no_hp }}</span>
+                                                <td class="align-middle text-center">
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $dokter->no_hp }}</p>
                                                 </td>
-                                                <td class="align-middle text-center text-sm">
-                                                    <span class="text-secondary text-xs font-weight-bold">{{ $dokter->poli->nama_poli }}</span>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">{{ $dokter->poli->nama_poli }}</p>
                                                 </td>
-                                                <td class="align-middle text-center text-sm">
+                                                <td class="align-middle text-center">
                                                     <div class="d-flex justify-content-center align-items-center gap-2">
                                                         <a href="{{ route('admin.dokter.edit', $dokter->id) }}" class="btn btn-dark btn-sm">
-                                                            <i class="fa fa-edit"></i>
+                                                            <i class="fa-solid fa-edit"></i>
                                                         </a>
                                                         <form action="{{ route('admin.dokter.destroy', $dokter->id) }}" method="POST" class="delete-form">
                                                             @csrf

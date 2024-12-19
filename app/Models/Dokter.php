@@ -35,7 +35,7 @@ class Dokter extends Authenticatable
     ];
 
     /**
-     * Relasi dengan model Poli
+     * Relasi dengan model Poli (One to One)
      * Dokter terkait dengan satu poli.
      */
     public function poli()
@@ -44,7 +44,7 @@ class Dokter extends Authenticatable
     }
 
     /**
-     * Relasi dengan model JadwalPraktik
+     * Relasi dengan model JadwalPraktik (One to Many)
      * Dokter memiliki banyak jadwal praktik.
      */
     public function jadwalPraktik()

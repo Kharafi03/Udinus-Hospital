@@ -1,4 +1,7 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Jadwal Praktik - Poliklinik Udinus</title>
+@endpush
 @push('styles')
     <style>
         .card-calendar .calendar {
@@ -12,7 +15,8 @@
     </style>
 @endpush
 @section('content')
-    <section class="content pt-4">
+    <!-- Jadwal Praktik -->
+    <section id="jadwal-praktik">
         <div class="container-fluid py-4">
             @include('component.alert')
             <div class="row">
@@ -23,7 +27,7 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <!-- Kolom Kiri: Menu -->
+                                <!-- Navigasi Hari -->
                                 <div class="col-sm-3 mb-3">
                                     <div class="nav-wrapper position-relative end-0">
                                         <ul class="nav nav-pills nav-fill flex-column p-1" role="tablist">
@@ -41,22 +45,17 @@
                                         </ul>
                                     </div>
                                 </div>
-
-                                <!-- Kolom Kanan: Konten -->
+                                <!-- Konten Jadwal -->
                                 <div class="col-sm-9">
                                     <div class="tab-content" id="hariTabContent">
                                         @foreach ($days as $index => $day)
-                                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
-                                                id="{{ strtolower($day) }}" role="tabpanel"
-                                                aria-labelledby="{{ strtolower($day) }}-tab">
+                                            <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="{{ strtolower($day) }}" role="tabpanel" aria-labelledby="{{ strtolower($day) }}-tab">
                                                 <div class="d-flex justify-content-between align-items-center mb-3">
                                                     <h5 class="mb-0">{{ $day }}</h5>
-                                                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#addSlotModal">
+                                                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addSlotModal">
                                                         Tambah Slot
                                                     </button>
                                                 </div>
-
                                                 @if (isset($jadwal_by_day[$day]) && $jadwal_by_day[$day]->isNotEmpty())
                                                     <div class="table-responsive">
                                                         <table class="table table-hover align-middle text-center">
@@ -64,24 +63,22 @@
                                                                 <tr>
                                                                     <th>Jam Mulai</th>
                                                                     <th>Jam Selesai</th>
-                                                                    <th class="text-center">Aksi</th>
-                                                                    <th class="text-center">Keterangan</th>
+                                                                    <th>Aksi</th>
+                                                                    <th>Status</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($jadwal_by_day[$day] as $jadwal)
                                                                     <tr>
                                                                         <td>
-                                                                            <span
-                                                                                class="badge badge-pill badge-dark badge-lg text-white">
+                                                                            <span class="badge badge-pill badge-dark badge-lg text-white">
                                                                                 <p class="mb-0 text-sm">
                                                                                     {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
                                                                                 </p>
                                                                             </span>
                                                                         </td>
                                                                         <td>
-                                                                            <span
-                                                                                class="badge badge-pill badge-dark badge-lg text-white">
+                                                                            <span class="badge badge-pill badge-dark badge-lg text-white">
                                                                                 <p class="mb-0 text-sm">
                                                                                     {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
                                                                                 </p>
@@ -133,8 +130,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="addSlotModalLabel">Tambah Slot</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <form method="POST" action="{{ route('dokter.jadwal_praktik.store') }}">
@@ -143,27 +139,25 @@
                                                 <input type="hidden" name="hari" id="hari" value="Senin">
                                                 <div class="mb-3">
                                                     <label for="jam_mulai" class="form-label">Jam Mulai</label>
-                                                    <input type="time" class="form-control" name="jam_mulai"
-                                                        id="jam_mulai" required>
+                                                    <input type="time" class="form-control" name="jam_mulai" id="jam_mulai" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="jam_selesai" class="form-label">Jam Selesai</label>
-                                                    <input type="time" class="form-control" name="jam_selesai"
-                                                        id="jam_selesai" required>
+                                                    <input type="time" class="form-control" name="jam_selesai" id="jam_selesai" required>
                                                 </div>
                                                 <button type="submit" class="btn btn-success">
                                                     <i class="fa-solid fa-floppy-disk me-1"></i>
-                                                    Tambah Slot</button>
+                                                    Tambah Slot
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
+                <!-- Calendar -->
                 <div class="col-lg-3">
                     <div class="card min-vh-70 card-calendar">
                         <div class="card-body p-3">
@@ -174,75 +168,99 @@
             </div>
         </div>
     </section>
-
-    @push('scripts')
-        <script>
-            $(document).ready(function() {
-                var hiddenInput = $('#hari');
-
-                // Ambil teks dari tab aktif dan ambil hanya nama hari
-                var activeTabText = $('.nav-link.active').text().trim();
-
-                // Menggunakan regex untuk hanya mengambil nama hari dari teks tab
-                var day = activeTabText.match(/Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu/);
-
-                // Set nilai input tersembunyi dengan nama hari saja, jika ditemukan
-                if (day) {
-                    hiddenInput.val(day[0]);
-                }
-
-                // Ketika tab berubah, update nilai input tersembunyi dengan nama hari
-                $('.nav-link').on('shown.bs.tab', function() {
-                    var newActiveTabText = $(this).text().trim();
-
-                    // Menggunakan regex untuk mengambil nama hari
-                    var newDay = newActiveTabText.match(/Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu/);
-
-                    if (newDay) {
-                        hiddenInput.val(newDay[0]); // Update nilai input tersembunyi
-                    }
-                });
-            });
-        </script>
-
-        <script>
-            // Menangani submit form dengan kelas 'delete-form'
-            $(document).on('submit', '.delete-form', function(event) {
-                event.preventDefault();
-                var form = this; // Menyimpan form yang sedang disubmit
-                confirmDelete(form); // Memanggil fungsi konfirmasi hapus
-            });
-        </script>
-        <script src="{{ asset('js/plugins/fullcalendar.min.js') }}"></script>
-
-        <script>
-            var events = @json($events); // Ambil data event dari controller
-            console.log(events);
-
-            // Inisialisasi kalender FullCalendar
-            var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
-                initialView: "dayGridMonth",
-                headerToolbar: {
-                    start: 'title',
-                    center: '',
-                    end: 'today prev,next'
-                },
-                events: events, // Gunakan data event dari controller
-                locale: 'id', // Set locale untuk bahasa Indonesia
-                selectable: true,
-                editable: true,
-            });
-
-            // Render kalender
-            calendar.render();
-        </script>
-        <script>
-            // Menangani submit form dengan kelas 'delete-form'
-            $(document).on('submit', '.confirm-update-jadwal', function(event) {
-                event.preventDefault();
-                var form = this;  // Menyimpan form yang sedang disubmit
-                confirmUpdateJadwal(form);  // Memanggil fungsi konfirmasi hapus
-            });
-        </script>
-    @endpush
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/plugins/flatpickr.js') }}"></script>
+    <script src="{{ asset('js/plugins/flatpickr-id.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            var hiddenInput = $('#hari');
+
+            // Ambil teks dari tab aktif dan ambil hanya nama hari
+            var activeTabText = $('.nav-link.active').text().trim();
+
+            // Menggunakan regex untuk hanya mengambil nama hari dari teks tab
+            var day = activeTabText.match(/Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu/);
+
+            // Set nilai input tersembunyi dengan nama hari saja, jika ditemukan
+            if (day) {
+                hiddenInput.val(day[0]);
+            }
+
+            // Ketika tab berubah, update nilai input tersembunyi dengan nama hari
+            $('.nav-link').on('shown.bs.tab', function() {
+                var newActiveTabText = $(this).text().trim();
+
+                // Menggunakan regex untuk mengambil nama hari
+                var newDay = newActiveTabText.match(/Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu/);
+
+                if (newDay) {
+                    hiddenInput.val(newDay[0]); // Update nilai input tersembunyi
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Menangani submit form dengan kelas 'delete-form'
+        $(document).on('submit', '.delete-form', function(event) {
+            event.preventDefault();
+            var form = this; // Menyimpan form yang sedang disubmit
+            confirmDelete(form); // Memanggil fungsi konfirmasi hapus
+        });
+    </script>
+    <script src="{{ asset('js/plugins/fullcalendar.min.js') }}"></script>
+
+    <script>
+        var events = @json($events); // Ambil data event dari controller
+        console.log(events);
+
+        // Inisialisasi kalender FullCalendar
+        var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+            initialView: "dayGridMonth",
+            headerToolbar: {
+                start: 'title',
+                center: '',
+                end: 'today prev,next'
+            },
+            events: events, // Gunakan data event dari controller
+            locale: 'id', // Set locale untuk bahasa Indonesia
+            selectable: true,
+            editable: true,
+        });
+
+        // Render kalender
+        calendar.render();
+    </script>
+    <script>
+        // Menangani submit form dengan kelas 'delete-form'
+        $(document).on('submit', '.confirm-update-jadwal', function(event) {
+            event.preventDefault();
+            var form = this;  // Menyimpan form yang sedang disubmit
+            confirmUpdateJadwal(form);  // Memanggil fungsi konfirmasi hapus
+        });
+    </script>
+    <script>
+        // Inisialisasi flatpickr untuk jam_mulai
+        const jamMulaiPicker = flatpickr('#jam_mulai', {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            locale: "id",
+            onChange: function (selectedDates, dateStr) {
+                // Saat jam_mulai berubah, perbarui minTime untuk jam_selesai
+                jamSelesaiPicker.set('minTime', dateStr);
+            },
+        });
+    
+        // Inisialisasi flatpickr untuk jam_selesai
+        const jamSelesaiPicker = flatpickr('#jam_selesai', {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            locale: "id",
+        });
+    </script>    
+@endpush

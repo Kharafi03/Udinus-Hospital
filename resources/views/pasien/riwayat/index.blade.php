@@ -3,6 +3,8 @@
     <title>Riwayat Pasien - Poliklinik Udinus</title>
 @endpush
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}">
     <style>
         body {
             background: url('/img/frontend/poli/poli-background.jpg') no-repeat center center;
@@ -10,7 +12,7 @@
             color: white;
         }
 
-        .profil-section {
+        #riwayat-pasien {
             padding-top: 95px;
             position: relative;
             z-index: 1;
@@ -19,9 +21,12 @@
 @endpush
 
 @section('content')
-    <section class="profil-section">
-        <div class="container-fluid">
+    <!-- Riwayat Pasien -->
+    <section id="riwayat-pasien">
+        <div class="container-fluid py-4">
+            @include('component.alert')
             <div class="row">
+                <!-- Daftar Poli -->
                 <div class="col-md-3 mb-4">
                     <div class="card">
                         <div class="card-header">
@@ -92,12 +97,13 @@
                             </div>
                             <div class="form-group row mx-1">
                                 <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary w-100">Daftar Poli</button>
+                                    <button type="submit" class="btn btn-dark w-100">Daftar Poli</button>
                                 </div>
                             </div>                            
                         </form>                        
                     </div>
                 </div>
+                <!-- Riwayat Pasien -->
                 <div class="col-md-9 mb-4">
                     <div class="card">
                         <div class="card-header">
@@ -113,7 +119,6 @@
                                             <th scope="col">Antrian</th>
                                             <th scope="col">Tanggal Periksa</th>
                                             <th scope="col">Jadwal</th>
-                                            <th scope="col">Keluhan</th>
                                             <th scope="col">Dokter</th>
                                             <th scope="col">Status</th>
                                         </tr>
@@ -128,7 +133,7 @@
                                                     {{ $riwayat->jadwalPraktik->dokter->poli->nama_poli }}
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ $riwayat->no_antrian }}
+                                                    <span class="badge bg-dark badge-lg">{{ $riwayat->no_antrian }}</span>
                                                 </td>
                                                 <td class="align-middle text-center">
                                                     {{ \Carbon\Carbon::parse($riwayat->tgl_periksa)->translatedFormat('d F Y') }}
@@ -139,13 +144,19 @@
                                                     {{ \Carbon\Carbon::parse($riwayat->jadwalPraktik->jam_selesai)->format('H:i') }})
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ $riwayat->keluhan }}
-                                                </td>
-                                                <td class="align-middle text-center">
                                                     {{ $riwayat->jadwalPraktik->dokter->nama }}
                                                 </td>
                                                 <td class="align-middle text-center">
-                                                    {{ $riwayat->status }}
+                                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                                        @if ($riwayat->periksa)
+                                                            <span class="badge bg-success">Sudah Diperiksa</span>
+                                                        @else
+                                                            <span class="badge bg-danger">Belum Diperiksa</span>
+                                                        @endif
+                                                        <a href="{{ route('pasien.riwayat.detail', $riwayat->id) }}" class="btn btn-dark btn-sm">
+                                                            <i class="fa fa-eye"></i>
+                                                        </a>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -161,27 +172,63 @@
 @endsection
 @include('component.datatable')
 @push('scripts')
-<script>
-    $('#poli').on('change', function () {
-        const poliId = $(this).val();
-        const jadwalSelect = $('#jadwal');
-        jadwalSelect.html('<option value="" disabled selected>Loading...</option>');
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/flatpickr.js') }}"></script>
+    <script src="{{ asset('js/plugins/flatpickr-id.js') }}"></script>
+    <script>
+        $('#tgl_periksa').on('change', function () {
+            const selectedDate = new Date($(this).val()); // Tanggal yang dipilih
+            const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            const selectedDay = dayNames[selectedDate.getDay()]; // Ambil nama hari dari tanggal
+            
+            const poliId = $('#poli').val(); // ID Poli yang dipilih
+            const jadwalSelect = $('#jadwal');
+            jadwalSelect.html('<option value="" disabled selected>Loading...</option>');
 
-        $.get(`/pasien/get-jadwal/${poliId}`)
-            .done(function (data) {
-                jadwalSelect.html('<option value="" disabled selected>Pilih Jadwal</option>');
-                data.forEach(function (jadwal) {
-                    const option = $('<option></option>')
-                        .val(jadwal.id)
-                        .text(`${jadwal.hari} (${jadwal.jam_mulai} - ${jadwal.jam_selesai}) - ${jadwal.dokter.nama}`);
-                    jadwalSelect.append(option);
-                });
-            })
-            .fail(function (error) {
-                console.error('Error fetching jadwal:', error);
-                jadwalSelect.html('<option value="" disabled selected>Error loading data</option>');
-            });
-    });
-</script>
+            if (poliId && selectedDay) {
+                $.get(`/pasien/get-jadwal/${poliId}/${selectedDay}`)
+                    .done(function (data) {
+                        jadwalSelect.html('<option value="" disabled selected>Pilih Jadwal</option>');
+                        data.forEach(function (jadwal) {
+                            const option = $('<option></option>')
+                                .val(jadwal.id)
+                                .text(`${jadwal.hari} (${jadwal.jam_mulai} - ${jadwal.jam_selesai}) - ${jadwal.dokter.nama}`);
+                            jadwalSelect.append(option);
+                        });
+                    })
+                    .fail(function (error) {
+                        console.error('Error fetching jadwal:', error);
+                        jadwalSelect.html('<option value="" disabled selected>Error loading data</option>');
+                    });
+            } else {
+                jadwalSelect.html('<option value="" disabled selected>Pilih Poli dan Tanggal terlebih dahulu</option>');
+            }
+        });
 
+
+        // Inisialisasi Select2
+        $('#jadwal').select2({
+            placeholder: "Pilih Jadwal", 
+            allowClear: true,
+            width: '100%', 
+            theme: 'bootstrap-5'
+        });
+
+        $('#poli').select2({
+            placeholder: "Pilih Poli", 
+            allowClear: true,
+            width: '100%', 
+            theme: 'bootstrap-5'
+        });
+
+    </script>
+    <script>
+        flatpickr('#tgl_periksa', {
+            dateFormat: "Y-m-d",
+            minDate: new Date().fp_incr(1),
+            maxDate: new Date().fp_incr(30),
+            locale: "id",
+            disable: ['today'],
+        });
+    </script>
 @endpush

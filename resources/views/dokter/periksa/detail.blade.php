@@ -3,11 +3,13 @@
     <title>Detail Periksa - Poliklinik Udinus</title>
 @endpush
 @push('styles')
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}">
 @endpush
 @section('content')
-    <section class="content pt-4">
-        <div class="container-fluid">
+    <!-- Detail Periksa -->
+    <section id="detail-periksa">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
@@ -54,6 +56,26 @@
                                                     name="catatan" id="catatan" required>{{ old('catatan', $periksa ? $periksa->catatan : '') }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row border-bottom pb-4 mx-1">
+                                                    <label for="biaya_periksa" class="col-form-label">Biaya Obat</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control @error('biaya_periksa') is-invalid @enderror" 
+                                                            name="biaya_periksa" id="biaya_periksa" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row border-bottom pb-4 mx-1">
+                                                    <label for="total_biaya" class="col-form-label">Total Biaya</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control @error('total_biaya') is-invalid @enderror" 
+                                                            name="total_biaya" id="total_biaya" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>                                        
                                         <div class="form-group row border-bottom pb-4 mx-1">
                                             <label for="obat" class="col-form-label">Obat</label>
                                             <div class="col-sm-12">
@@ -71,14 +93,7 @@
                                                     </div>
                                                 @enderror
                                             </div>
-                                        </div>                                        
-                                        <div class="form-group row border-bottom pb-4 mx-1">
-                                            <label for="biaya_periksa" class="col-form-label">Biaya Periksa</label>
-                                            <div class="col-sm-12">
-                                                <input type="number" class="form-control @error('biaya_periksa') is-invalid @enderror" 
-                                                    name="biaya_periksa" id="biaya_periksa" readonly>
-                                            </div>
-                                        </div>                                        
+                                        </div>                               
                                         <div class="d-flex justify-content-end">
                                             <button type="submit" class="btn btn-success">
                                                 <i class="fa-solid fa-download me-1"></i> Simpan
@@ -95,42 +110,53 @@
     </section>
 @endsection
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            // format input number
-            formatInputNumber('#no_hp');
 
             $('#obat').select2({
                 placeholder: "Pilih Obat", // Placeholder ketika tidak ada pilihan
-                allowClear: true, // Menambahkan tombol untuk menghapus pilihan
-                width: '100%' // Agar dropdown menggunakan lebar penuh
+                // allowClear: true, // Menambahkan tombol untuk menghapus pilihan
+                width: '100%', // Agar dropdown menggunakan lebar penuh
+                theme: 'bootstrap-5'
             });
 
             // Fungsi untuk menghitung total harga
-        function hitungTotalHarga() {
-            let totalHarga = 0;
+            function hitungTotalHarga() {
+                let totalHarga = 0;
 
-            // Menghitung total harga berdasarkan obat yang dipilih
-            $('#obat').find('option:selected').each(function () {
-                let harga = $(this).data('harga');
-                totalHarga += parseFloat(harga);
+                // Menghitung total harga berdasarkan obat yang dipilih
+                $('#obat').find('option:selected').each(function () {
+                    let harga = $(this).data('harga');
+                    totalHarga += parseFloat(harga);
+                });
+
+                // Format nilai total harga ke dalam format ribuan
+                let formattedTotal = formatRibuan(totalHarga);
+                
+                // Mengubah nilai input dengan total harga yang diformat
+                $('#biaya_periksa').val(formattedTotal);
+
+                // Total biaya
+                let totalBiaya = totalHarga + 150000;
+                $('#total_biaya').val(formatRibuan(totalBiaya));
+            }
+
+            // Fungsi untuk memformat angka ke dalam format ribuan
+            function formatRibuan(angka) {
+                return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            }
+
+            // Event listener untuk perubahan pilihan pada select
+            $('#obat').on('change', function () {
+                hitungTotalHarga();
             });
 
-            // Mengubah nilai input dengan total harga
-            $('#biaya_periksa').val(totalHarga);
-        }
-
-        // Panggil fungsi hitungTotalHarga saat halaman dimuat
-        hitungTotalHarga();
-
-        // Event listener untuk perubahan pilihan pada select
-        $('#obat').on('change', function () {
-            hitungTotalHarga();
-        });
+            // Panggil fungsi hitungTotalHarga saat halaman dimuat
+            $(document).ready(function () {
+                hitungTotalHarga();
+            });
 
         });
     </script>
-
-    
 @endpush

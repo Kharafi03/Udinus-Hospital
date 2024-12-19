@@ -52,7 +52,6 @@ class JadwalPraktikController extends Controller
     {
         // Validasi input
         $request->validate([
-            'id_dokter' => 'required|exists:dokter,id',
             'hari' => 'required|string',
             'jam_mulai' => 'required|date_format:H:i',
             'jam_selesai' => 'required|date_format:H:i|after:jam_mulai',
@@ -103,7 +102,7 @@ class JadwalPraktikController extends Controller
     {
         $jadwal = JadwalPraktik::findOrFail($id);
 
-        $currentDay = Carbon::now()->format('l');
+        $currentDay = Carbon::now()->translatedFormat('l');
         if ($jadwal->hari === $currentDay) {
             return redirect()->route('dokter.jadwal_praktik.index')
                 ->with([

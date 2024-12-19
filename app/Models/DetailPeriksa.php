@@ -24,11 +24,19 @@ class DetailPeriksa extends Model
         'deleted_at',
     ];
 
+    /**
+     * Relasi dengan model Periksa (One to Many)
+     * Satu detail periksa terkait dengan satu periksa
+     */
     public function periksa()
     {
         return $this->belongsTo(Periksa::class, 'id_periksa', 'id');
     }
 
+    /**
+     * Relasi dengan model Obat (One to One)
+     * Satu detail periksa terkait dengan satu obat
+     */
     public function obat()
     {
         return $this->belongsTo(Obat::class, 'id_obat', 'id');

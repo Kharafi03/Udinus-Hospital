@@ -2,20 +2,25 @@
 @push('title')
     <title>Tambah Dokter - Poliklinik Udinus</title>
 @endpush
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}"
+@endpush
 @section('content')
-    <section class="content pt-4">
-        <div class="container-fluid">
+    <!-- Tambah Dokter -->
+    <section id="tambah-dokter">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <h3>Tambah Dokter</h3>
-                            <a href="{{ route('admin.dokter.index') }}" class="btn btn-success shadow-sm float-right">
+                            <a href="{{ route('admin.dokter.index') }}" class="btn btn-success shadow-sm float-right mt-2">
                                 <i class="fa fa-arrow-left me-1"></i>
                                 Kembali
                             </a>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body">
                             @include('component.alert')
                             <form method="POST" action="{{ route('admin.dokter.store') }}" enctype="multipart/form-data">
                                 @csrf
@@ -95,7 +100,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <<div class="d-flex justify-content-end">
+                                        <div class="d-flex justify-content-end">
                                             <button type="submit" class="btn btn-success">
                                                 <i class="fa-solid fa-download me-1"></i> Simpan
                                             </button>
@@ -111,10 +116,19 @@
     </section>
 @endsection
 @push('scripts')
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             // format input number
             formatInputNumber('#no_hp');
+
+            // Inisialisasi Select2
+            $('#id_poli').select2({
+                placeholder: "Pilih Poli", 
+                allowClear: true,
+                width: '100%', 
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endpush

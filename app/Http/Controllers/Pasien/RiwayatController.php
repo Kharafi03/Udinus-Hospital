@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Poli;
 use App\Models\JadwalPraktik;
 use App\Models\DaftarPoli;
+use App\Models\Periksa;
+use App\Models\DetailPeriksa;
+use App\Models\Obat;
 
 
 class RiwayatController extends Controller
@@ -23,12 +26,13 @@ class RiwayatController extends Controller
         return view('pasien.riwayat.index', compact('pasien', 'polis', 'riwayats'));
     }
 
-    public function getJadwal($id_poli)
+    public function getJadwal($id_poli, $hari)
     {
         $jadwals = JadwalPraktik::whereHas('dokter', function ($query) use ($id_poli) {
             $query->where('id_poli', $id_poli);
         })
             ->where('is_active', 1)
+            ->where('hari', $hari) // Filter berdasarkan hari
             ->with('dokter:id,nama')
             ->get(['id', 'hari', 'jam_mulai', 'jam_selesai', 'id_dokter']);
 
@@ -63,5 +67,29 @@ class RiwayatController extends Controller
             'alert-type' => 'success'
         ]);
         
+    }
+
+    public function detail($id)
+    {
+        $pasien = auth()->guard('pasien')->user();
+
+        $daftarpoli = DaftarPoli::find($id);
+        $periksa = Periksa::where('id_daftar_poli', $id)->first();
+        
+        $obats = Obat::all();
+
+        // Ambil daftar obat jika ada data periksa, jika tidak kosongkan array
+        $daftarObat = $periksa
+            ? DetailPeriksa::where('id_periksa', $periksa->id)->pluck('id_obat')->toArray()
+            : [];
+
+        if (is_null($daftarpoli) || $daftarpoli->id_pasien != $pasien->id) {
+            return redirect()->back()->with([
+                'message' => 'Data tidak ditemukan',
+                'alert-type' => 'error',
+            ]);
+        }
+
+        return view('pasien.riwayat.detail', compact('daftarpoli', 'periksa', 'obats', 'daftarObat'));
     }
 }

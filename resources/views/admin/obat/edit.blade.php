@@ -1,18 +1,19 @@
 @extends('component.layout.app')
 @section('content')
-    <section class="content pt-4">
-        <div class="container-fluid">
+    <!-- Edit Obat -->
+    <section id="edit-obat">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <h3>Edit Obat</h3>
-                            <a href="{{ route('admin.obat.index') }}" class="btn btn-success shadow-sm float-right">
+                            <a href="{{ route('admin.obat.index') }}" class="btn btn-success shadow-sm float-right mt-2">
                                 <i class="fa fa-arrow-left me-1"></i>
                                 Kembali
                             </a>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body">
                             @include('component.alert')
                             <form id="editObatForm" method="POST" action="{{ route('admin.obat.update', $obat->id) }}" enctype="multipart/form-data">
                                 @csrf

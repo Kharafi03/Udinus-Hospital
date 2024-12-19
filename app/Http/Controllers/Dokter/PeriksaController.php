@@ -16,11 +16,12 @@ class PeriksaController extends Controller
     {
         $dokter = auth()->guard('dokter')->user();
         $jadwalId = $dokter->jadwalPraktik->pluck('id');
-        $daftarPolis = DaftarPoli::whereIn('id_jadwal', $jadwalId)->get();
+        $daftarPolis = DaftarPoli::whereIn('id_jadwal', $jadwalId)
+            ->with('periksa') // Load relasi periksa
+            ->get();
 
         return view('dokter.periksa.index', compact('daftarPolis'));
     }
-
 
     public function detail($id)
     {
@@ -28,7 +29,10 @@ class PeriksaController extends Controller
         $daftarpoli = DaftarPoli::with('jadwalPraktik')->findOrFail($id);
 
         if ($daftarpoli->jadwalPraktik->dokter->id != $dokter->id) {
-            abort(403);
+            return redirect()->back()->with([
+                'message' => 'Data tidak ditemukan',
+                'alert-type' => 'error',
+            ]);
         }
 
         $obats = Obat::all();
@@ -47,7 +51,6 @@ class PeriksaController extends Controller
         $request->validate([
             'catatan' => 'required',
             'obat' => 'required|array|min:1',
-            'biaya_periksa' => 'required|numeric|regex:/^\d{1,10}$/',
         ]);
 
         // Cari data DaftarPoli
@@ -56,13 +59,19 @@ class PeriksaController extends Controller
         // Ambil semua obat berdasarkan ID yang dipilih
         $obats = Obat::whereNull('deleted_at')->whereIn('id', $request->obat)->get();
 
+        // Hitung total biaya
+        $biaya = 150000;
+        foreach ($obats as $obat) {
+            $biaya += $obat->harga;
+        }
+
         // Cari data periksa yang sudah ada atau buat data baru
         $periksa = Periksa::updateOrCreate(
             ['id_daftar_poli' => $daftarpoli->id],
             [
                 'tgl_periksa' => $daftarpoli->tgl_periksa,
                 'catatan' => $request->catatan,
-                'biaya_periksa' => $request->biaya_periksa
+                'biaya_periksa' => $biaya
             ]
         );
 

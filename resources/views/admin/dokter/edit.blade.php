@@ -2,15 +2,20 @@
 @push('title')
     <title>Edit Dokter - Poliklinik Udinus</title>
 @endpush
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}"
+@endpush
 @section('content')
-    <section class="content pt-4">
-        <div class="container-fluid">
+    <!-- Edit Dokter -->
+    <section id="edit-dokter">
+        <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
-                        <div class="card-header pb-0">
+                        <div class="card-header">
                             <h3>Edit Dokter</h3>
-                            <a href="{{ route('admin.dokter.index') }}" class="btn btn-success shadow-sm float-right">
+                            <a href="{{ route('admin.dokter.index') }}" class="btn btn-success shadow-sm float-right mt-2">
                                 <i class="fa fa-arrow-left me-1"></i>
                                 Kembali
                             </a>
@@ -112,10 +117,19 @@
     </section>
 @endsection
 @push('scripts')
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             // format input number
             formatInputNumber('#no_hp');
+
+            // Inisialisasi Select2
+            $('#id_poli').select2({
+                placeholder: "Pilih Poli", 
+                allowClear: true,
+                width: '100%', 
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endpush

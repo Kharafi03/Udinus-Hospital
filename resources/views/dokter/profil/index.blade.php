@@ -1,6 +1,14 @@
 @extends('component.layout.app')
+@push('title')
+    <title>Profil Dokter - Poliklinik Udinus</title>
+@endpush
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/select2/select2-bootstrap-5-theme.min.css') }}">
+@endpush
 @section('content')
-    <section class="content pt-4">
+    <!-- Profil Dokter -->
+    <section id="profil-dokter">
         <div class="container-fluid py-4">
             <div class="row">
                 <div class="col-md-4">
@@ -9,55 +17,30 @@
                         <div class="row justify-content-center">
                             <div class="col-4 col-lg-4 order-lg-2">
                                 <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
-                                    <img src="{{ asset('img/user/user.png') }}"
-                                        class="rounded-circle img-fluid border border-2 border-dark">
+                                    <img src="{{ asset('img/user/user.png') }}" class="rounded-circle img-fluid border border-2 border-dark">
                                 </div>
                             </div>
                         </div>
-                        <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                            <div class="d-flex justify-content-between">
-                                <a href="schedule.html" class="btn btn-sm btn-info mb-0 d-none d-lg-block">Lihat Jadwal</a>
-                                <a href="javascript:;"
-                                    class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Hubungi</a>
-                            </div>
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="d-flex justify-content-center">
-                                        <div class="d-grid text-center">
-                                            <span class="text-lg font-weight-bolder">120</span>
-                                            <span class="text-sm opacity-8">Pasien</span>
-                                        </div>
-                                        <div class="d-grid text-center mx-4">
-                                            <span class="text-lg font-weight-bolder">8</span>
-                                            <span class="text-sm opacity-8">Jadwal Tersedia</span>
-                                        </div>
-                                        <div class="d-grid text-center">
-                                            <span class="text-lg font-weight-bolder">45</span>
-                                            <span class="text-sm opacity-8">Ulasan</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-center mt-4">
+                        <div class="card-body">
+                            <div class="text-center">
                                 <h5>
                                     {{ $dokter->nama }}
                                 </h5>
-                                <div class="h6 font-weight-300">
-                                    <i class="ni location_pin mr-2"></i>Semarang, Indonesia
-                                </div>
-                                <div class="h6 mt-4">
-                                    <i class="ni business_briefcase-24 mr-2"></i>Spesialis Anak - RS Semarang
-                                </div>
-                                <div>
-                                    <i class="ni education_hat mr-2"></i>Universitas Gadjah Mada
-                                </div>
+                                <h6>
+                                    {{ $dokter->poli->nama_poli ?? 'Spesialis Tidak Diketahui' }}
+                                </h6>
                             </div>
                             <div class="text-center mt-4">
                                 <h6>Jadwal Praktik</h6>
-                                <p>Senin - Jumat: 08:00 - 16:00</p>
-                                <p>Sabtu: 08:00 - 12:00</p>
+                                <p>
+                                    @foreach ($dokter->jadwalPraktik as $jadwal)
+                                        @if ($jadwal->is_active)
+                                            <strong>{{ $jadwal->hari }}</strong>: 
+                                            {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }} - 
+                                            {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}<br>
+                                        @endif
+                                    @endforeach
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -70,8 +53,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form id="editFormProfil" action="{{ route('dokter.profil.update') }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form id="editFormProfil" action="{{ route('dokter.profil.update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-4">
@@ -206,10 +188,19 @@
     </section>
 @endsection
 @push('scripts')
+    <script src="{{ asset('js/plugins/select2.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             // format input number
             formatInputNumber('#no_hp');
+
+            // Inisialisasi Select2
+            $('#id_poli').select2({
+                placeholder: "Pilih Poli", 
+                allowClear: true,
+                width: '100%', 
+                theme: 'bootstrap-5'
+            });
         });
     </script>
 @endpush

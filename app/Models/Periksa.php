@@ -26,11 +26,19 @@ class Periksa extends Model
         'deleted_at',
     ];
 
+    /**
+     * Relasi dengan model DaftarPoli (One to One)
+     * Satu periksa terkait dengan satu daftar poli
+     */
     public function daftar_poli()
     {
         return $this->belongsTo(DaftarPoli::class, 'id_daftar_poli', 'id');
     }
 
+    /**
+     * Relasi dengan model DetailPeriksa (One to Many)
+     * Satu periksa terkait dengan banyak detail periksa
+     */
     public function detailPeriksa()
     {
         return $this->hasMany(DetailPeriksa::class, 'id_periksa');

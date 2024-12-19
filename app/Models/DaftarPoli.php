@@ -15,7 +15,7 @@ class DaftarPoli extends Model
 
     // Menentukan kolom yang bisa diisi (fillable)
     protected $fillable = [
-        'id_pasien', 
+        'id_pasien',
         'id_jadwal',
         'tgl_periksa',
         'keluhan',
@@ -23,7 +23,8 @@ class DaftarPoli extends Model
     ];
 
     /**
-     * Relasi dengan model Pasien (One to Many)
+     * Relasi dengan model Pasien (One to One)
+     * Satu daftar poli terkait dengan satu pasien
      */
     public function pasien()
     {
@@ -31,7 +32,8 @@ class DaftarPoli extends Model
     }
 
     /**
-     * Relasi dengan model JadwalPraktik (One to Many)
+     * Relasi dengan model JadwalPraktik (One to One)
+     * Satu daftar poli terkait dengan satu jadwal praktik
      */
     public function jadwalPraktik()
     {
@@ -39,10 +41,11 @@ class DaftarPoli extends Model
     }
 
     /**
-     * Relasi dengan model Poli (One to Many)
+     * Relasi dengan model Periksa (One to One)
+     * Satu daftar poli terkait dengan satu periksa
      */
-    public function poli()
+    public function periksa()
     {
-        return $this->belongsTo(Poli::class, 'id_poli', 'id');
+        return $this->hasOne(Periksa::class, 'id_daftar_poli');
     }
 }
