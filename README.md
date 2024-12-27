@@ -18,7 +18,7 @@ Udinus-Hospital adalah aplikasi manajemen klinik yang dirancang untuk mempermuda
 
 ## Instalasi
 
-`1. Clone repositori ini ke dalam komputer lokal Anda:
+1. Clone repositori ini ke dalam komputer lokal Anda:
 
 ```
 git clone https://github.com/Kharafi03/Udinus-Hospital.git
@@ -93,3 +93,7 @@ composer run dev
 - admin: Bertanggung jawab untuk pengelolaan operasional klinik.
 - dokter: Akses terbatas pada jadwal pribadi, data pasien yang terkait, dan catatan medis.
 - pasien: Dapat mengakses fitur pendaftaran dan melihat riwayat pribadi.
+
+## Akun Default Admin
+- No HP 082136676464 Password 12345678
+- Semua akun admin, dokter, dan pasien memiliki password default: 12345678
