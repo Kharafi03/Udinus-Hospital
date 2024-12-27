@@ -5,7 +5,8 @@
             <!-- Tentang Kami -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="footer-logo mb-3">
-                    <img src="{{ asset('img/logo/logo.png') }}" alt="logo" class="img-fluid">
+                    <img src="{{ asset('img/logo/logo-ct-dark.png') }}" alt="logo" class="img-fluid" style="height: 50px;">
+                    <span class="ms-1 font-weight-bold text-lg">{{ config('app.name') }}</span>
                 </div>
                 <p>Kami memudahkan Anda dalam menjadwalkan janji medis. Terhubung dengan tenaga medis profesional, kelola jadwal konsultasi, dan prioritaskan kesehatan Anda bersama kami.</p>
                 <div class="social-icon">
@@ -49,9 +50,9 @@
             <!-- Kontak Kami -->
             <div class="col-lg-3 col-md-6 mb-4">
                 <h5>Kontak Kami</h5>
-                <p><i class="fas fa-map-marker-alt"></i> Jl. Pandanaran No.123, Semarang, Jawa Tengah</p>
+                <p><i class="fas fa-map-marker-alt"></i> Jl. Imam Bonjol No.207, Semarang, Jawa Tengah</p>
                 <p><i class="fas fa-phone-alt"></i> +62 24 765 4321</p>
-                <p><i class="fas fa-envelope"></i> kontak@rs-semarang.com</p>
+                <p><i class="fas fa-envelope"></i> kontak@poliklinik.com</p>
             </div>
         </div>
     </div>
@@ -60,7 +61,7 @@
         <div class="container">
             <div class="row justify-content-between">
                 <div class="col-md-6">
-                    <p class="mb-0">Hak Cipta © 2024 Rumah Sakit Semarang. Semua Hak Dilindungi.</p>
+                    <p class="mb-0">Hak Cipta © 2024 {{ config('app.name') }}. Semua Hak Dilindungi.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <ul class="list-inline mb-0">

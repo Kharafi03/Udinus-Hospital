@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProfilController as AdminProfilController;
 // Dokter
 use App\Http\Controllers\Dokter\DashboardController as DokterDashboardController;
 use App\Http\Controllers\Dokter\PeriksaController as DokterPeriksaController;
+use App\Http\Controllers\Dokter\RiwayatPasienController as DokterRiwayatPasienController;
 use App\Http\Controllers\Dokter\JadwalPraktikController as DokterJadwalPraktikController;
 use App\Http\Controllers\Dokter\ProfilController as DokterProfilController;
 
@@ -118,6 +119,10 @@ Route::middleware(['auth:dokter'])->group(function () {
     Route::put('/dokter/periksa/{id}', [DokterPeriksaController::class, 'update'])->name('dokter.periksa.update');
     Route::delete('/dokter/periksa/{id}', [DokterPeriksaController::class, 'destroy'])->name('dokter.periksa.destroy');
 
+    // Riwayat Pasien
+    Route::get('/dokter/riwayat_pasien', [DokterRiwayatPasienController::class, 'index'])->name('dokter.riwayat_pasien.index');
+    Route::get('/dokter/riwayat_pasien/detail/{id}', [DokterRiwayatPasienController::class, 'pasien'])->name('dokter.riwayat_pasien.pasien');
+
     // Jadwal Praktik
     Route::get('/dokter/jadwal', [DokterJadwalPraktikController::class, 'index'])->name('dokter.jadwal_praktik.index');
     Route::post('/dokter/jadwal', [DokterJadwalPraktikController::class, 'store'])->name('dokter.jadwal_praktik.store');
@@ -145,7 +150,7 @@ Route::middleware(['auth:pasien'])->group(function () {
         return redirect()->route('pasien.riwayat.index');
     });
     Route::get('/pasien/riwayat', [PasienRiwayatController::class, 'index'])->name('pasien.riwayat.index');
-    Route::get('/pasien/get-jadwal/{id_poli}/{hari}', [PasienRiwayatController::class, 'getJadwal'])->name('pasien.get-jadwal');
+    Route::get('/pasien/get-jadwal/{poliId}', [PasienRiwayatController::class, 'getJadwal'])->name('pasien.get-jadwal');
     Route::post('/pasien/daftar-poli', [PasienRiwayatController::class, 'daftarPoli'])->name('pasien.daftar_poli');
     Route::get('/pasien/riwayat/detail/{id}', [PasienRiwayatController::class, 'detail'])->name('pasien.riwayat.detail');
 });

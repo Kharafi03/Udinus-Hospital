@@ -20,7 +20,7 @@
                                 Kembali
                             </a>
                         </div>
-                        <div class="card-body pt-0">
+                        <div class="card-body">
                             @include('component.alert')
                             <div class="row">
                                 <div class="col-md-6">
@@ -83,7 +83,7 @@
                                                     @foreach ($obats as $obat)
                                                         <option value="{{ $obat->id }}" data-harga="{{ $obat->harga }}"
                                                             {{ in_array($obat->id, $daftarObat) ? 'selected' : '' }}>
-                                                            {{ $obat->nama_obat }}
+                                                            {{ $obat->nama_obat }} - Rp. {{ number_format($obat->harga, 0, ',', '.') }}
                                                         </option>
                                                     @endforeach
                                                 </select>

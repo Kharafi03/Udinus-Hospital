@@ -52,7 +52,7 @@ class LoginController extends Controller
         $pasien = Pasien::where('no_hp', $no_hp)->first();
         if ($pasien && Hash::check($password, $pasien->password)) {
             Auth::guard('pasien')->login($pasien); // Gunakan guard pasien
-            return redirect()->route('homepage')
+            return redirect()->route('pasien.riwayat.index')
                 ->with([
                     'message' => 'Selamat datang di halaman pasien!',
                     'alert-type' => 'success'

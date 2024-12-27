@@ -13,7 +13,7 @@
                         <div class="position-relative bg-gradient-dark h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                         style="background-image: url('{{ asset('img/frontend/auth/login-banner.png') }}'); background-size: cover; min-height: 20rem;">
                             <span class="mask bg-gradient-dark opacity-6"></span>
-                            <h4 class="mt-5 text-white font-weight-bolder position-relative">Udinus Hospital</h4>
+                            <h4 class="mt-5 text-white font-weight-bolder position-relative">Poliklinik Udinus</h4>
                             <p class="text-white position-relative">
                                 Menyediakan Layanan Kesehatan Untuk Masyarakat
                             </p>
@@ -60,16 +60,6 @@
                                         </button>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="card-footer text-center">
-                                <p class="text-sm text-center">
-                                    Lupa password?
-                                    <a href="" class="text-dark font-weight-bold">Reset Password</a>
-                                </p>
-                                <p class="text-sm text-center">
-                                    Belum punya akun?
-                                    <a href="" class="text-dark font-weight-bold">Daftar Sekarang</a>
-                                </p>
                             </div>
                         </div>
                     </div>

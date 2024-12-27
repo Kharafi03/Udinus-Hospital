@@ -12,16 +12,24 @@ use Illuminate\Http\Request;
 class PeriksaController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
         $dokter = auth()->guard('dokter')->user();
         $jadwalId = $dokter->jadwalPraktik->pluck('id');
-        $daftarPolis = DaftarPoli::whereIn('id_jadwal', $jadwalId)
-            ->with('periksa') // Load relasi periksa
-            ->get();
+
+        $query = DaftarPoli::whereIn('id_jadwal', $jadwalId)
+            ->with('periksa'); // Load relasi periksa
+
+        // Filter berdasarkan tanggal hari ini
+        if ($request->has('today')) {
+            $query->whereDate('tgl_periksa', \Carbon\Carbon::today());
+        }
+
+        $daftarPolis = $query->get();
 
         return view('dokter.periksa.index', compact('daftarPolis'));
     }
+
 
     public function detail($id)
     {
@@ -87,7 +95,7 @@ class PeriksaController extends Controller
         }
 
         return redirect()->route('dokter.periksa.index')->with([
-            'message' => 'Periksa berhasil disimpan!',
+            'message' => 'Berhasil memeriksa pasien!',
             'alert-type' => 'success',
         ]);
     }

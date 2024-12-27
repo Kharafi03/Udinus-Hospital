@@ -11,6 +11,8 @@
                         Profil
                     @elseif(Request::is('dokter/jadwal') || Request::is('dokter/jadwal/*'))
                         Jadwal Praktik
+                    @elseif(Request::is('dokter/riwayat_pasien') || Request::is('dokter/riwayat_pasien/*'))
+                        Riwayat Pasien
                     @else
                         Dashboard
                     @endif
@@ -23,6 +25,8 @@
                     Profil
                 @elseif(Request::is('dokter/jadwal') || Request::is('dokter/jadwal/*'))
                     Jadwal Praktik
+                @elseif(Request::is('dokter/riwayat_pasien') || Request::is('dokter/riwayat_pasien/*'))
+                    Riwayat Pasien
                 @else
                     Dashboard
                 @endif

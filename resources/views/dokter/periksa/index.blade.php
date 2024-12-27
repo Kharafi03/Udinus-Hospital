@@ -1,6 +1,6 @@
 @extends('component.layout.app')
 @push('title')
-    <title>Daftar Dokter - Poliklinik Udinus</title>
+    <title>Daftar Periksa - Poliklinik Udinus</title>
 @endpush
 @section('content')
     <!-- Daftar Periksa -->
@@ -9,13 +9,17 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card mb-4">
-                        <div class="card-header pb-0">
+                        <div class="card-header pb-0 d-flex justify-content-between align-items-center">
                             <h3>Daftar Periksa</h3>
-                            <a href="" class="btn btn-success shadow-sm float-right mt-2">
-                                <i class="fa fa-plus me-1"></i> 
-                                Tambah 
-                            </a>
-                        </div>
+                            <div>
+                                <a href="{{ route('dokter.periksa.index') }}" class="btn {{ request('today') ? 'btn-secondary' : 'btn-primary' }} shadow-sm mt-2">
+                                    Semua
+                                </a>
+                                <a href="{{ route('dokter.periksa.index', ['today' => true]) }}" class="btn {{ request('today') ? 'btn-primary' : 'btn-secondary' }} shadow-sm mt-2">
+                                    <i class="fa fa-calendar-day me-1"></i> Hari Ini
+                                </a>
+                            </div>
+                        </div>                        
                         <div class="card-body pt-0">
                             @include('component.alert')
                             <div class="table-responsive">
@@ -41,7 +45,7 @@
                                                 Status
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Aksi
+                                                Periksa
                                             </th>
                                         </tr>
                                     </thead>
@@ -79,7 +83,7 @@
                                                 <td class="align-middle text-center text-sm">
                                                     <div class="d-flex justify-content-center align-items-center gap-2">
                                                         <a href="{{ route('dokter.periksa.detail', $daftarPoli->id) }}" class="btn btn-dark btn-sm">
-                                                            <i class="fa fa-eye"></i>
+                                                            <i class="fa-solid fa-pen-to-square"></i>
                                                         </a>
                                                     </div>
                                                 </td>

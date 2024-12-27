@@ -3,7 +3,8 @@
         <!-- Logo -->
         <div class="p-2 me-2">
             <a href="{{ url('/') }}" class="navbar-brand">
-                <img class="img-fluid" src="{{ asset('img/logo/logo.png') }}" alt="Icon" style="height: 50px;">
+                <img class="img-fluid" src="{{ asset('img/logo/logo-ct-dark.png') }}" alt="Icon" style="height: 50px;">
+                <span class="ms-1 font-weight-bold text-lg">{{ config('app.name') }}</span>
             </a>
         </div>
 

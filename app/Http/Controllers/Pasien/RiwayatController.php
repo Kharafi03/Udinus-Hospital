@@ -26,13 +26,12 @@ class RiwayatController extends Controller
         return view('pasien.riwayat.index', compact('pasien', 'polis', 'riwayats'));
     }
 
-    public function getJadwal($id_poli, $hari)
+    public function getJadwal($id_poli)
     {
         $jadwals = JadwalPraktik::whereHas('dokter', function ($query) use ($id_poli) {
             $query->where('id_poli', $id_poli);
         })
             ->where('is_active', 1)
-            ->where('hari', $hari) // Filter berdasarkan hari
             ->with('dokter:id,nama')
             ->get(['id', 'hari', 'jam_mulai', 'jam_selesai', 'id_dokter']);
 
@@ -49,11 +48,35 @@ class RiwayatController extends Controller
         ]);
 
         $pasien = auth()->guard('pasien')->user();
+        $jadwal = JadwalPraktik::findOrFail($request->jadwal);
 
+        // Cek apakah pasien sudah mendaftar pada jadwal dan tanggal yang sama
+        $existingEntry = DaftarPoli::where('id_pasien', $pasien->id)
+            ->where('id_jadwal', $request->jadwal)
+            ->where('tgl_periksa', $request->tgl_periksa)
+            ->exists();
+
+        if ($existingEntry) {
+            return redirect()->back()->with([
+                'message' => 'Anda sudah terdaftar untuk jadwal ini pada tanggal tersebut.',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        // Hitung antrian saat ini
         $noAntrian = DaftarPoli::where('id_jadwal', $request->jadwal)
             ->where('tgl_periksa', $request->tgl_periksa)
             ->max('no_antrian') + 1;
 
+        // Cek apakah melebihi batas maksimal
+        if ($noAntrian > $jadwal->max_antrian) {
+            return redirect()->back()->with([
+                'message' => 'Maaf, kuota antrian sudah penuh untuk jadwal ini.',
+                'alert-type' => 'error'
+            ]);
+        }
+
+        // Buat pendaftaran baru
         DaftarPoli::create([
             'id_pasien' => $pasien->id,
             'id_jadwal' => $request->jadwal,
@@ -66,7 +89,6 @@ class RiwayatController extends Controller
             'message' => 'Pendaftaran berhasil!',
             'alert-type' => 'success'
         ]);
-        
     }
 
     public function detail($id)
@@ -75,7 +97,7 @@ class RiwayatController extends Controller
 
         $daftarpoli = DaftarPoli::find($id);
         $periksa = Periksa::where('id_daftar_poli', $id)->first();
-        
+
         $obats = Obat::all();
 
         // Ambil daftar obat jika ada data periksa, jika tidak kosongkan array

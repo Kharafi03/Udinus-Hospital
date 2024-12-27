@@ -21,7 +21,7 @@
             @include('component.alert')
             <div class="row">
                 <div class="col-lg-5">
-                    <div class="card min-vh-80">
+                    <div class="card">
                         <div class="card-header">
                             <h3>Jadwal Praktik</h3>
                         </div>
@@ -158,8 +158,8 @@
                     </div>
                 </div>
                 <!-- Calendar -->
-                <div class="col-lg-3">
-                    <div class="card min-vh-70 card-calendar">
+                <div class="col-lg-7">
+                    <div class="card card-calendar">
                         <div class="card-body p-3">
                             <div class="calendar" id="calendar"></div>
                         </div>

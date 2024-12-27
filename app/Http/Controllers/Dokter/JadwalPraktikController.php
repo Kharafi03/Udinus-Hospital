@@ -43,8 +43,6 @@ class JadwalPraktikController extends Controller
             }
         }
 
-
-
         return view('dokter.jadwal_praktik.index', compact('jadwal_by_day', 'days', 'events'));
     }
 
@@ -97,7 +95,6 @@ class JadwalPraktikController extends Controller
             ]);
     }
 
-
     public function deactivate($id)
     {
         $jadwal = JadwalPraktik::findOrFail($id);
@@ -133,9 +130,6 @@ class JadwalPraktikController extends Controller
     {
         $jadwal = JadwalPraktik::findOrFail($id);
 
-        // Nonaktifkan jadwal lain
-        JadwalPraktik::where('id_dokter', $jadwal->id_dokter)->update(['is_active' => false]);
-
         if ($jadwal->is_active) {
             return redirect()->route('dokter.jadwal_praktik.index')
                 ->with([
@@ -143,6 +137,9 @@ class JadwalPraktikController extends Controller
                     'alert-type' => 'warning'
                 ]);
         }
+
+        // Nonaktifkan jadwal lain
+        JadwalPraktik::where('id_dokter', $jadwal->id_dokter)->update(['is_active' => false]);
 
         // Aktifkan jadwal
         $jadwal->update(['is_active' => true]);
